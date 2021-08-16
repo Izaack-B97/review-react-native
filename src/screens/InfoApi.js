@@ -1,12 +1,14 @@
 import moment from 'moment';
 import React, { useState, useEffect } from 'react'
-import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const InfoApi = ({ navigation }) => {
 
     const { top } = useSafeAreaInsets();
-    const [state, setState] = useState({});
+    const [state, setState] = useState([]);
+
+    console.log( state ); 
 
     useEffect(() => {
         fetch('https://rickandmortyapi.com/api/character/?page=1')
@@ -74,6 +76,20 @@ export const InfoApi = ({ navigation }) => {
                     </View>
                 </View> 
             </TouchableOpacity>
+        )
+    }
+
+    if ( state.length === 0 ) {
+        return (
+            <View 
+                style={{ 
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+            >
+                <ActivityIndicator size={ 50 } color="blue"/>
+            </View>
         )
     }
 
